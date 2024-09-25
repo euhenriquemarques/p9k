@@ -32,7 +32,7 @@ public class BancoService {
         return repository.buscarPorId(idBanco);
     }
 
-    public Banco buscarPorIdUsuario(Usuario usuario) {
-        return repository.buscarPorIdUsuario(usuario);
-    }
+//    public Banco buscarPorIdUsuario(Usuario usuario) {
+//        return repository.buscarPorIdUsuario(usuario);
+//    }
 }

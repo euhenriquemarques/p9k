@@ -1,18 +1,25 @@
 package br.com.p9k.p9k.domain.entidade;
 
+import jakarta.persistence.*;
 import lombok.Data;
 
+import java.io.Serializable;
+
 @Data
-public class Conta {
+@Entity
+public class Conta  implements Serializable {
 
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String numero;
     private String agencia;
-    private Banco idBanco;
+    @ManyToOne
+    private Banco banco;
     private boolean compartilhado;
     private boolean status;
     private boolean nacional;
-    private Usuario idUsuario;
+    @ManyToOne
+    private Usuario usuario;
 
 }

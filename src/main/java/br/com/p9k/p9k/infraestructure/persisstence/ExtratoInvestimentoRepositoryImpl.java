@@ -1,11 +1,11 @@
 package br.com.p9k.p9k.infraestructure.persisstence;
 
 
-import br.com.p9k.p9k.domain.entidade.Banco;
+import br.com.p9k.p9k.domain.entidade.ExtratoInvestimento;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface BancoRepositoryImpl  extends JpaRepository<Banco, Integer> {
+public interface ExtratoInvestimentoRepositoryImpl extends JpaRepository<ExtratoInvestimento, Integer> {
 
 }

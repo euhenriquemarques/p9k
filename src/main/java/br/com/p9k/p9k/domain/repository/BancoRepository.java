@@ -2,7 +2,6 @@ package br.com.p9k.p9k.domain.repository;
 
 
 import br.com.p9k.p9k.domain.entidade.Banco;
-import br.com.p9k.p9k.domain.entidade.Usuario;
 import br.com.p9k.p9k.infraestructure.persisstence.BancoRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -40,12 +39,5 @@ public class BancoRepository {
 
         return null;
     }
-    public Banco buscarPorIdUsuario(Usuario usuario) {
-        Optional<Banco> optionalBanco = repositoryImpl.findByIdUsuario(usuario);
-        if (optionalBanco.isPresent()){
-            return optionalBanco.get();
-        }
 
-        return null;
-    }
 }

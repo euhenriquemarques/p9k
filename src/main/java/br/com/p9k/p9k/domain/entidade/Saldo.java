@@ -1,11 +1,18 @@
 package br.com.p9k.p9k.domain.entidade;
 
+import jakarta.persistence.*;
 import lombok.Data;
 
-@Data
-public class Saldo {
+import java.io.Serializable;
 
+@Data
+@Entity
+public class Saldo  implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private Double saldo;
-    private Conta idConta;
+    @ManyToOne
+    private Conta conta;
 }

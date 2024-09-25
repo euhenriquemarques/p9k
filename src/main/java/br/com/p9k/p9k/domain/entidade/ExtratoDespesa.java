@@ -1,19 +1,26 @@
 package br.com.p9k.p9k.domain.entidade;
 
 
+import jakarta.persistence.*;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Data
-public class ExtratoDespesa {
+@Entity
+public class ExtratoDespesa  implements Serializable {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private Despesa idDepessa;
+    @ManyToOne
+    private Despesa despesa;
     private LocalDateTime dataProcessamento;
     private Double valor;
     private Double valorJuros;
     private Double valorDesconto;
-    private Usuario idUsuario;
+    @ManyToOne
+    private Usuario usuario;
 
 }
