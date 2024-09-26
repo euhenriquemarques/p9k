@@ -40,4 +40,8 @@ public class BancoRepository {
         return null;
     }
 
+
+    public Optional<Banco> findById(int idBanco) {
+        return repositoryImpl.findById(idBanco);
+    }
 }

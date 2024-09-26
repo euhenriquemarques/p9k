@@ -1,15 +1,21 @@
 package br.com.p9k.p9k.domain.service;
 
+import br.com.p9k.p9k.domain.entidade.Banco;
 import br.com.p9k.p9k.domain.entidade.Meta;
 import br.com.p9k.p9k.domain.repository.MetaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MetaService {
 
-    private MetaRepository repository;
+    private final MetaRepository repository;
+
+    public MetaService(MetaRepository repository) {
+        this.repository = repository;
+    }
 
     public void salvar(Meta Meta) {
         repository.salvar(Meta);
@@ -27,11 +33,7 @@ public class MetaService {
         return repository.buscarTodos();
     }
 
-    public Meta buscarPorId(int idMeta) {
-        return repository.buscarPorId(idMeta);
+    public Optional<Meta> findById(int id) {
+        return repository.findById(id);
     }
-
-//    public Meta buscarPorIdUsuario(Usuario usuario) {
-//        return repository.buscarPorIdUsuario(usuario);
-//    }
 }

@@ -1,6 +1,7 @@
 package br.com.p9k.p9k.domain.repository;
 
 
+import br.com.p9k.p9k.domain.entidade.Banco;
 import br.com.p9k.p9k.domain.entidade.Categoria;
 import br.com.p9k.p9k.infraestructure.persisstence.CategoriaRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,10 @@ public class CategoriaRepository {
         }
 
         return null;
+    }
+
+    public Optional<Categoria> findById(int idBanco) {
+        return repositoryImpl.findById(idBanco);
     }
 
 }

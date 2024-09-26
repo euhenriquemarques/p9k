@@ -5,11 +5,16 @@ import br.com.p9k.p9k.domain.repository.ContaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ContaService {
 
-    private ContaRepository repository;
+    private final ContaRepository repository;
+
+    public ContaService(ContaRepository repository) {
+        this.repository = repository;
+    }
 
     public void salvar(Conta Conta) {
         repository.salvar(Conta);
@@ -27,11 +32,7 @@ public class ContaService {
         return repository.buscarTodos();
     }
 
-    public Conta buscarPorId(int idConta) {
-        return repository.buscarPorId(idConta);
+    public Optional<Conta> findById(int id) {
+        return repository.findById(id);
     }
-
-//    public Conta buscarPorIdUsuario(Usuario usuario) {
-//        return repository.buscarPorIdUsuario(usuario);
-//    }
 }

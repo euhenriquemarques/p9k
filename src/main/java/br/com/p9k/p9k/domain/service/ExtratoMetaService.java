@@ -1,15 +1,21 @@
 package br.com.p9k.p9k.domain.service;
 
+import br.com.p9k.p9k.domain.entidade.Banco;
 import br.com.p9k.p9k.domain.entidade.ExtratoMeta;
 import br.com.p9k.p9k.domain.repository.ExtratoMetaRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ExtratoMetaService {
 
-    private ExtratoMetaRepository repository;
+    private final ExtratoMetaRepository repository;
+
+    public ExtratoMetaService(ExtratoMetaRepository repository) {
+        this.repository = repository;
+    }
 
     public void salvar(ExtratoMeta ExtratoMeta) {
         repository.salvar(ExtratoMeta);
@@ -27,11 +33,7 @@ public class ExtratoMetaService {
         return repository.buscarTodos();
     }
 
-    public ExtratoMeta buscarPorId(int idExtratoMeta) {
-        return repository.buscarPorId(idExtratoMeta);
+    public Optional<ExtratoMeta> findById(int id) {
+        return repository.findById(id);
     }
-
-//    public ExtratoMeta buscarPorIdUsuario(Usuario usuario) {
-//        return repository.buscarPorIdUsuario(usuario);
-//    }
 }
