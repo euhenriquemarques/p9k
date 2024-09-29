@@ -18,7 +18,11 @@ public interface DespesaRepositoryImpl extends JpaRepository<Despesa, Integer> {
     List<Despesa> findDespesasAtivasByUsuarioAndDataVencimento(@Param("usuarioId") int usuarioId, @Param("dataFimMes") LocalDateTime dataFimMes);
 
     @Query("SELECT t FROM Despesa t LEFT JOIN ExtratoDespesa e ON t.id = e.despesa.id" +
-            " WHERE t.usuario.id = :usuarioId AND t.ativo = true")
+            " WHERE t.usuario.id = :usuarioId AND t.ativo = true ORDER BY t.dataProcessamento")
     List<Despesa> findDespesasAtivasByUsuarioSemData(@Param("usuarioId") int usuarioId);
+
+    @Query("SELECT t FROM Despesa t LEFT JOIN ExtratoDespesa e ON t.id = e.despesa.id" +
+            " WHERE t.usuario.id = :usuarioId AND t.ativo  = true AND e.id IS NULL ORDER BY t.dataProcessamento ")
+    List<Despesa> findDespesasAtivasByUsuarioSemDataVigentes(@Param("usuarioId") int usuarioId);
 
 }

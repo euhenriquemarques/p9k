@@ -1,6 +1,7 @@
 package br.com.p9k.p9k.application;
 
 import br.com.p9k.p9k.domain.entidade.Categoria;
+import br.com.p9k.p9k.domain.enums.TipoCategoria;
 import br.com.p9k.p9k.domain.service.CategoriaService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -53,6 +54,13 @@ public class CategoriaController {
         } else {
             return new ResponseEntity<>("Categoria não encontrado", HttpStatus.NOT_FOUND);
         }
+    }
+
+    @GetMapping("/tipoCategoria")
+    public ResponseEntity<Object> buscarTipoCategoria() {
+
+            return new ResponseEntity<>(TipoCategoria.values(), HttpStatus.OK);
+
     }
 
     @DeleteMapping("/{id}")

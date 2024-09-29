@@ -52,7 +52,10 @@ public class DespesaRepository {
         return repositoryImpl.findDespesasAtivasByUsuarioAndDataVencimento(idUsuario, dataAtual);
     }
 
-    public List<Despesa> buscarDespesasVigentesEFuturas(int idUsuario) {
+    public List<Despesa> buscarDespesasGeralEFuturas(int idUsuario) {
         return repositoryImpl.findDespesasAtivasByUsuarioSemData(idUsuario);
+    }
+    public List<Despesa> buscarDespesasVigentesEFuturas(int idUsuario) {
+        return repositoryImpl.findDespesasAtivasByUsuarioSemDataVigentes(idUsuario);
     }
 }

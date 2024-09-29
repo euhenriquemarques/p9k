@@ -66,6 +66,10 @@ public class DespesaService {
 
     }
 
+    public List<Despesa> buscarDespesasGeralEFuturas(int idUsuario) {
+       return repository.buscarDespesasGeralEFuturas(idUsuario);
+
+    }
     public List<Despesa> buscarDespesasVigentesEFuturas(int idUsuario) {
        return repository.buscarDespesasVigentesEFuturas(idUsuario);
 

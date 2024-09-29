@@ -1,6 +1,7 @@
 package br.com.p9k.p9k.domain.entidade;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,9 +17,12 @@ public class Conta  implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @NotNull
     private String numero;
+    @NotNull
     private String agencia;
     @ManyToOne
+    @NotNull
     private Banco banco;
     private boolean compartilhado;
     private boolean status;

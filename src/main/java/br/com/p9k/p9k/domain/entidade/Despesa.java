@@ -32,4 +32,5 @@ public class Despesa  implements Serializable {
     private boolean ativo;
     private double valorParcela;
     private double valorTotal;
+    private String descricao;
 }
