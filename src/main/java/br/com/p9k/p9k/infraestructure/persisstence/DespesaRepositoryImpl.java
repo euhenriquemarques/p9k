@@ -14,7 +14,7 @@ import java.util.List;
 public interface DespesaRepositoryImpl extends JpaRepository<Despesa, Integer> {
 
     @Query("SELECT t FROM Despesa t LEFT JOIN ExtratoDespesa e ON t.id = e.despesa.id" +
-            " WHERE t.usuario.id = :usuarioId AND t.ativo = true AND t.dataVencimentoParcela < :dataFimMes AND e.id IS NULL")
+            " WHERE t.usuario.id = :usuarioId AND t.ativo = true AND t.dataVencimentoParcela <= :dataFimMes AND e.id IS NULL")
     List<Despesa> findDespesasAtivasByUsuarioAndDataVencimento(@Param("usuarioId") int usuarioId, @Param("dataFimMes") LocalDateTime dataFimMes);
 
     @Query("SELECT t FROM Despesa t LEFT JOIN ExtratoDespesa e ON t.id = e.despesa.id" +

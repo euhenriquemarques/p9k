@@ -41,8 +41,11 @@ public class CategoriaRepository {
         return null;
     }
 
-    public Optional<Categoria> findById(int idBanco) {
-        return repositoryImpl.findById(idBanco);
+    public List<Categoria> findById(int idUsuario) {
+        return repositoryImpl.findByIdusuario(idUsuario);
     }
 
+    public List<Categoria> buscarCategoriaPorUsuario(int idUsuario) {
+        return repositoryImpl.buscarCategoriaPorUsuario(idUsuario);
+    }
 }

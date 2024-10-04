@@ -2,6 +2,7 @@ package br.com.p9k.p9k.domain.entidade;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -23,6 +24,8 @@ public class ExtratoDespesa  implements Serializable {
     @ManyToOne
     private Despesa despesa;
     private LocalDateTime dataProcessamento;
+    @NotNull
+    private LocalDateTime dataPagamento;
     private Double valor;
     private Double valorJuros;
     private Double valorDesconto;

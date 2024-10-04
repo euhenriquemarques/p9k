@@ -45,4 +45,12 @@ public class SaldoRepository {
         return repositoryImpl.findById(idBanco);
     }
 
+    public Optional<Saldo> findByContaId(int contaId) {
+        return repositoryImpl.findByContaId(contaId);
+    }
+
+
+    public List<Saldo> buscarPorIdUsuario(int idUsuario) {
+        return repositoryImpl.buscarPorIdUsuario(idUsuario);
+    }
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalAdjusters;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,8 +23,9 @@ public class DespesaService {
     }
 
     public void salvar(Despesa despesa) {
+        int contadorVencimentoMes = 0;
 
-        for (int parcelaCurrent = 1; parcelaCurrent <= despesa.getParcelaTotais(); parcelaCurrent++) {
+        for (int parcelaCurrent = despesa.getParcela(); parcelaCurrent <= despesa.getParcelaTotais(); parcelaCurrent++) {
             repository.salvar(
                     Despesa
                             .builder()
@@ -33,12 +35,14 @@ public class DespesaService {
                             .parcela(despesa.isRecorrente() ? 0 : parcelaCurrent)
                             .recorrente(despesa.isRecorrente())
                             .usuario(despesa.getUsuario())
-                            .dataVencimentoParcela(despesa.isRecorrente() ? DATA_ATUAL : despesa.getDataVencimentoParcela().plus(parcelaCurrent, ChronoUnit.MONTHS))
+                            .dataVencimentoParcela(despesa.isRecorrente() ? DATA_ATUAL : despesa.getDataVencimentoParcela().plus(contadorVencimentoMes, ChronoUnit.MONTHS))
                             .parcelaTotais(despesa.isRecorrente() ? 0 : despesa.getParcelaTotais())
                             .valorParcela(despesa.getValorParcela())
                             .valorTotal(despesa.isRecorrente() ? despesa.getValorParcela()  : despesa.getValorTotal())
                             .ativo(true)
+                            .descricao(despesa.getDescricao())
                             .build());
+            contadorVencimentoMes++;
         }
 
 
@@ -62,7 +66,12 @@ public class DespesaService {
 
 
     public List<Despesa> buscarDespesasVigentes(int idUsuario) {
-       return repository.buscarDespesasVigentes(idUsuario,DATA_ATUAL);
+       return repository.buscarDespesasVigentes(idUsuario, LocalDateTime.now(ZoneId.of("America/Sao_Paulo"))
+               .with(TemporalAdjusters.lastDayOfMonth())
+               .withHour(23)
+               .withMinute(59)
+               .withSecond(59)
+               .truncatedTo(ChronoUnit.SECONDS));
 
     }
 

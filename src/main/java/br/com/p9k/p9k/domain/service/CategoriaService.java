@@ -33,7 +33,11 @@ public class CategoriaService {
         return repository.buscarTodos();
     }
 
-    public Optional<Categoria> findById(int id) {
+    public List<Categoria> findById(int id) {
         return repository.findById(id);
+    }
+
+    public List<Categoria> buscarCategoriaPorUsuario(int idUsuario) {
+        return repository.buscarCategoriaPorUsuario(idUsuario);
     }
 }

@@ -27,30 +27,21 @@ public class CategoriaController {
         return new ResponseEntity<>("Categoria criado com sucesso!", HttpStatus.CREATED);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Object> atualizar(@PathVariable int id, @Valid @RequestBody Categoria objeto) {
-        Optional<Categoria> optional = service.findById(id);
-
-        if (optional.isPresent()) {
-            objeto.setId(id);
-            service.salvar(objeto);
-            return new ResponseEntity<>("Categoria atualizada com sucesso!", HttpStatus.OK);
+    @GetMapping("/todos")
+    public ResponseEntity<Object> buscarCategoria(@RequestParam int idUsuario) {
+        List<Categoria> objeto = service.buscarCategoriaPorUsuario(idUsuario);
+        if (!objeto.isEmpty()) {
+            return new ResponseEntity<>(objeto, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("Categoria não encontrada", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("Categoria não encontrado", HttpStatus.NOT_FOUND);
         }
     }
 
-    @GetMapping
-    public ResponseEntity<List<Categoria>> listar() {
-        List<Categoria> objeto = service.buscarTodos();
-        return new ResponseEntity<>(objeto, HttpStatus.OK);
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<Object> buscarPorId(@PathVariable int id) {
-        Optional<Categoria> objeto = service.findById(id);
-        if (objeto.isPresent()) {
-            return new ResponseEntity<>(objeto.get(), HttpStatus.OK);
+    @GetMapping("/despesa")
+    public ResponseEntity<Object> buscarPorId(@RequestParam int idUsuario) {
+        List<Categoria> objeto = service.findById(idUsuario);
+        if (!objeto.isEmpty()) {
+            return new ResponseEntity<>(objeto, HttpStatus.OK);
         } else {
             return new ResponseEntity<>("Categoria não encontrado", HttpStatus.NOT_FOUND);
         }
@@ -63,14 +54,4 @@ public class CategoriaController {
 
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> deletar(@PathVariable int id) {
-        Optional<Categoria> objeto = service.findById(id);
-        if (objeto.isPresent()) {
-            service.remover(objeto.get());
-            return new ResponseEntity<>("Categoria deletada com sucesso!", HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>("Categoria não encontrada", HttpStatus.NOT_FOUND);
-        }
-    }
 }

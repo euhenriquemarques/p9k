@@ -33,7 +33,7 @@ public class SaldoService {
         return repository.buscarTodos();
     }
 
-    public Optional<Saldo> findById(int id) {
-        return repository.findById(id);
+    public Optional<Saldo> findByContaId(int id) {
+        return repository.findByContaId(id);
     }
 }

@@ -32,7 +32,7 @@ public class ContaService {
         return repository.buscarTodos();
     }
 
-    public Optional<Conta> findById(int id) {
-        return repository.findById(id);
+    public List<Conta> findById(int idUsuario) {
+        return repository.findById(idUsuario);
     }
 }

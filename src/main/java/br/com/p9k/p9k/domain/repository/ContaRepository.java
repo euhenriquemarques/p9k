@@ -41,8 +41,8 @@ public class ContaRepository {
         return null;
     }
 
-    public Optional<Conta> findById(int idBanco) {
-        return repositoryImpl.findById(idBanco);
+    public List<Conta> findById(int idUsuario) {
+        return repositoryImpl.findByUsuarioId(idUsuario);
     }
 
 }
