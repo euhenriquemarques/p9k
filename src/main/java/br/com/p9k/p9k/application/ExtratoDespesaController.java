@@ -35,7 +35,7 @@ public class ExtratoDespesaController {
             service.salvar(objeto);
             return new ResponseEntity<>("ExtratoDespesa atualizada com sucesso!", HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("ExtratoDespesa não encontrada", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("ExtratoDespesa não encontrada", HttpStatus.NO_CONTENT);
         }
     }
 
@@ -51,7 +51,7 @@ public class ExtratoDespesaController {
         if (objeto.isPresent()) {
             return new ResponseEntity<>(objeto.get(), HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("ExtratoDespesa não encontrado", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("ExtratoDespesa não encontrado", HttpStatus.NO_CONTENT);
         }
     }
 
@@ -62,7 +62,7 @@ public class ExtratoDespesaController {
             service.remover(objeto.get());
             return new ResponseEntity<>("ExtratoDespesa deletada com sucesso!", HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("ExtratoDespesa não encontrada", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("ExtratoDespesa não encontrada", HttpStatus.NO_CONTENT);
         }
     }
 }

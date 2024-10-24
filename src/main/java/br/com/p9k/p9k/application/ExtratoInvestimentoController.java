@@ -35,7 +35,7 @@ public class ExtratoInvestimentoController {
             service.salvar(objeto);
             return new ResponseEntity<>("ExtratoInvestimento atualizada com sucesso!", HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("ExtratoInvestimento não encontrada", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("ExtratoInvestimento não encontrada", HttpStatus.NO_CONTENT);
         }
     }
 
@@ -51,7 +51,7 @@ public class ExtratoInvestimentoController {
         if (objeto.isPresent()) {
             return new ResponseEntity<>(objeto.get(), HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("ExtratoInvestimento não encontrado", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("ExtratoInvestimento não encontrado", HttpStatus.NO_CONTENT);
         }
     }
 
@@ -62,7 +62,7 @@ public class ExtratoInvestimentoController {
             service.remover(objeto.get());
             return new ResponseEntity<>("ExtratoInvestimento deletada com sucesso!", HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("ExtratoInvestimento não encontrada", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("ExtratoInvestimento não encontrada", HttpStatus.NO_CONTENT);
         }
     }
 }

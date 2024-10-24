@@ -1,6 +1,5 @@
 package br.com.p9k.p9k.domain.entidade;
 
-import br.com.p9k.p9k.domain.enums.TipoCategoria;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
@@ -15,18 +14,19 @@ import java.io.Serializable;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Categoria implements Serializable {
+public class Cartao implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @NotNull
     private String descricao;
-    @Enumerated(EnumType.STRING)
-    @NotNull
-    private TipoCategoria movimentacao;
     @ManyToOne
     @NotNull
     private Usuario usuario;
+    @NotNull
+    private String dataVencimentoCartao;
+    @NotNull
+    private String dataFechamento;
 
 }

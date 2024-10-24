@@ -2,11 +2,13 @@ package br.com.p9k.p9k.domain.repository;
 
 
 import br.com.p9k.p9k.domain.entidade.Banco;
+import br.com.p9k.p9k.domain.entidade.Despesa;
 import br.com.p9k.p9k.domain.entidade.ExtratoDespesa;
 import br.com.p9k.p9k.infraestructure.persisstence.ExtratoDespesaRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,4 +47,7 @@ public class ExtratoDespesaRepository {
         return repositoryImpl.findById(idBanco);
     }
 
+    public List<ExtratoDespesa> findDespesasAtivasByUsuarioAndPagas(int idUsuario, LocalDateTime inicioMes, LocalDateTime ultimoDiaMes) {
+        return repositoryImpl.findDespesasAtivasByUsuarioAndPagas(idUsuario, inicioMes, ultimoDiaMes);
+    }
 }

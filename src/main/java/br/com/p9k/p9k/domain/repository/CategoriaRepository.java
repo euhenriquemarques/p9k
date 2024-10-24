@@ -45,6 +45,10 @@ public class CategoriaRepository {
         return repositoryImpl.findByIdusuario(idUsuario);
     }
 
+    public List<Categoria> findyInvestimentoEntrada(int idUsuario) {
+        return repositoryImpl.findyInvestimentoEntrada(idUsuario);
+    }
+
     public List<Categoria> buscarCategoriaPorUsuario(int idUsuario) {
         return repositoryImpl.buscarCategoriaPorUsuario(idUsuario);
     }

@@ -35,7 +35,7 @@ public class DespesaController {
             service.salvar(objeto);
             return new ResponseEntity<>("Despesa atualizada com sucesso!", HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("Despesa não encontrada", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("Despesa não encontrada", HttpStatus.NO_CONTENT);
         }
     }
 
@@ -45,7 +45,7 @@ public class DespesaController {
         if (!listaDespesas.isEmpty()) {
             return new ResponseEntity<>(listaDespesas, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("Despesa não encontrado", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("Despesa não encontrado", HttpStatus.NO_CONTENT);
         }
     }
 
@@ -55,7 +55,7 @@ public class DespesaController {
         if (!listaDespesas.isEmpty()) {
             return new ResponseEntity<>(listaDespesas, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("Despesa não encontrado", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("Despesa não encontrado", HttpStatus.NO_CONTENT);
         }
     }
     @GetMapping("/geralVigentes")
@@ -64,7 +64,7 @@ public class DespesaController {
         if (!listaDespesas.isEmpty()) {
             return new ResponseEntity<>(listaDespesas, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("Despesa não encontrado", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("Despesa não encontrado", HttpStatus.NO_CONTENT);
         }
     }
 
@@ -76,7 +76,7 @@ public class DespesaController {
         if (objeto.isPresent()) {
             return new ResponseEntity<>(objeto.get(), HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("Despesa não encontrado", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("Despesa não encontrado", HttpStatus.NO_CONTENT);
         }
     }
 
@@ -87,7 +87,7 @@ public class DespesaController {
             service.remover(objeto.get());
             return new ResponseEntity<>("Despesa deletada com sucesso!", HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("Despesa não encontrada", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("Despesa não encontrada", HttpStatus.NO_CONTENT);
         }
     }
 }

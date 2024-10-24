@@ -26,20 +26,6 @@ public class ContaController {
         return new ResponseEntity<>("Conta criado com sucesso!", HttpStatus.CREATED);
     }
 
-//    @PutMapping("/{id}")
-//    public ResponseEntity<Object> atualizar(@PathVariable int id, @Valid @RequestBody Conta objeto) {
-//        Optional<Conta> optional = service.findById(id);
-//
-//        if (optional.isPresent()) {
-//            objeto.setId(id);
-//            service.salvar(objeto);
-//            return new ResponseEntity<>("Conta atualizada com sucesso!", HttpStatus.OK);
-//        } else {
-//            return new ResponseEntity<>("Conta não encontrada", HttpStatus.NOT_FOUND);
-//        }
-//    }
-
-
 
     @GetMapping()
     public ResponseEntity<Object> buscarPorId(@RequestParam int idUsuario) {
@@ -47,7 +33,7 @@ public class ContaController {
         if (!lista.isEmpty()) {
             return new ResponseEntity<>(lista, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("Conta não encontrado", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("Conta não encontrado", HttpStatus.NO_CONTENT);
         }
     }
 
@@ -58,7 +44,7 @@ public class ContaController {
 //            service.remover(objeto.get());
 //            return new ResponseEntity<>("Conta deletada com sucesso!", HttpStatus.OK);
 //        } else {
-//            return new ResponseEntity<>("Conta não encontrada", HttpStatus.NOT_FOUND);
+//            return new ResponseEntity<>("Conta não encontrada", HttpStatus.NO_CONTENT);
 //        }
 //    }
 }

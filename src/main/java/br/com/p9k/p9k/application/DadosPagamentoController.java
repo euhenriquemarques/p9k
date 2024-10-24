@@ -26,43 +26,25 @@ public class DadosPagamentoController {
         return new ResponseEntity<>("DadosPagamento criado com sucesso!", HttpStatus.CREATED);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Object> atualizar(@PathVariable int id, @Valid @RequestBody DadosPagamento objeto) {
-        Optional<DadosPagamento> optional = service.findById(id);
 
-        if (optional.isPresent()) {
-            objeto.setId(id);
-            service.salvar(objeto);
-            return new ResponseEntity<>("DadosPagamento atualizada com sucesso!", HttpStatus.OK);
+    @GetMapping()
+    public ResponseEntity<Object> buscarPorId(@RequestParam int idUsuario) {
+        List<DadosPagamento> lista = service.findById(idUsuario);
+        if (!lista.isEmpty()) {
+            return new ResponseEntity<>(lista, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("DadosPagamento não encontrada", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("DadosPagamento não encontrado", HttpStatus.NO_CONTENT);
         }
     }
 
-    @GetMapping
-    public ResponseEntity<List<DadosPagamento>> listar() {
-        List<DadosPagamento> objeto = service.buscarTodos();
-        return new ResponseEntity<>(objeto, HttpStatus.OK);
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<Object> buscarPorId(@PathVariable int id) {
-        Optional<DadosPagamento> objeto = service.findById(id);
-        if (objeto.isPresent()) {
-            return new ResponseEntity<>(objeto.get(), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>("DadosPagamento não encontrado", HttpStatus.NOT_FOUND);
-        }
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> deletar(@PathVariable int id) {
-        Optional<DadosPagamento> objeto = service.findById(id);
-        if (objeto.isPresent()) {
-            service.remover(objeto.get());
-            return new ResponseEntity<>("DadosPagamento deletada com sucesso!", HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>("DadosPagamento não encontrada", HttpStatus.NOT_FOUND);
-        }
-    }
+//    @DeleteMapping("/{id}")
+//    public ResponseEntity<String> deletar(@PathVariable int id) {
+//        Optional<DadosPagamento> objeto = service.findById(id);
+//        if (objeto.isPresent()) {
+//            service.remover(objeto.get());
+//            return new ResponseEntity<>("DadosPagamento deletada com sucesso!", HttpStatus.OK);
+//        } else {
+//            return new ResponseEntity<>("DadosPagamento não encontrada", HttpStatus.NO_CONTENT);
+//        }
+//    }
 }

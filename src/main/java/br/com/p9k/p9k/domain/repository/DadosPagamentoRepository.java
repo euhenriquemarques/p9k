@@ -7,6 +7,7 @@ import br.com.p9k.p9k.infraestructure.persisstence.DadosPagamentoRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,8 +42,8 @@ public class DadosPagamentoRepository {
         return null;
     }
 
-    public Optional<DadosPagamento> findById(int idBanco) {
-        return repositoryImpl.findById(idBanco);
+    public List<DadosPagamento> findById(int idUsuario, LocalDateTime dataAtual) {
+        return repositoryImpl.findByUsuarioId(idUsuario, dataAtual);
     }
 
 }

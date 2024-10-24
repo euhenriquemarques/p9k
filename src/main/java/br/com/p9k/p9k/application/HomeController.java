@@ -29,7 +29,7 @@ public class HomeController {
         if (lista != null) {
             return new ResponseEntity<>(lista, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("Conta não encontrado", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("Conta não encontrado", HttpStatus.NO_CONTENT);
         }
     }
 }

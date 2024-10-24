@@ -35,7 +35,7 @@ public class ExtratoMetaController {
             service.salvar(objeto);
             return new ResponseEntity<>("ExtratoMeta atualizada com sucesso!", HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("ExtratoMeta não encontrada", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("ExtratoMeta não encontrada", HttpStatus.NO_CONTENT);
         }
     }
 
@@ -51,7 +51,7 @@ public class ExtratoMetaController {
         if (objeto.isPresent()) {
             return new ResponseEntity<>(objeto.get(), HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("ExtratoMeta não encontrado", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("ExtratoMeta não encontrado", HttpStatus.NO_CONTENT);
         }
     }
 
@@ -62,7 +62,7 @@ public class ExtratoMetaController {
             service.remover(objeto.get());
             return new ResponseEntity<>("ExtratoMeta deletada com sucesso!", HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("ExtratoMeta não encontrada", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("ExtratoMeta não encontrada", HttpStatus.NO_CONTENT);
         }
     }
 }

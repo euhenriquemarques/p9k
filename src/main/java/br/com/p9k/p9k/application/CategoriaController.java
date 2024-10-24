@@ -33,7 +33,7 @@ public class CategoriaController {
         if (!objeto.isEmpty()) {
             return new ResponseEntity<>(objeto, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("Categoria não encontrado", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("Categoria não encontrado", HttpStatus.NO_CONTENT);
         }
     }
 
@@ -43,7 +43,17 @@ public class CategoriaController {
         if (!objeto.isEmpty()) {
             return new ResponseEntity<>(objeto, HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("Categoria não encontrado", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("Categoria não encontrado", HttpStatus.NO_CONTENT);
+        }
+    }
+
+    @GetMapping("/receita")
+    public ResponseEntity<Object> buscarReceitaPorIdUsuario(@RequestParam int idUsuario) {
+        List<Categoria> objeto = service.findyInvestimentoEntrada(idUsuario);
+        if (!objeto.isEmpty()) {
+            return new ResponseEntity<>(objeto, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Categoria não encontrado", HttpStatus.NO_CONTENT);
         }
     }
 

@@ -36,6 +36,9 @@ public class CategoriaService {
     public List<Categoria> findById(int id) {
         return repository.findById(id);
     }
+    public List<Categoria> findyInvestimentoEntrada(int id) {
+        return repository.findyInvestimentoEntrada(id);
+    }
 
     public List<Categoria> buscarCategoriaPorUsuario(int idUsuario) {
         return repository.buscarCategoriaPorUsuario(idUsuario);

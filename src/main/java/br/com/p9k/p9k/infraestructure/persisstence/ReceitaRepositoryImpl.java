@@ -1,7 +1,7 @@
 package br.com.p9k.p9k.infraestructure.persisstence;
 
 
-import br.com.p9k.p9k.domain.entidade.Despesa;
+import br.com.p9k.p9k.domain.entidade.Receita;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -11,10 +11,10 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Repository
-public interface DespesaRepositoryImpl extends JpaRepository<Despesa, Integer> {
+public interface ReceitaRepositoryImpl extends JpaRepository<Receita, Integer> {
 
-    @Query("SELECT d FROM Despesa d " +
-            "LEFT JOIN ExtratoDespesa ed ON d.id = ed.despesa.id " +
+    @Query("SELECT d FROM Receita d " +
+            "LEFT JOIN ExtratoReceita ed ON d.id = ed.receita.id " +
             "WHERE ed.id IS NULL " +
             "AND d.usuario.id = :usuarioId " +
             "AND d.ativo = true " +
@@ -23,19 +23,19 @@ public interface DespesaRepositoryImpl extends JpaRepository<Despesa, Integer> {
             "OR d.recorrente = true" +
             ") " +
             "ORDER BY d.dataVencimentoParcela, d.descricao")
-    List<Despesa> findDespesasAtivasByUsuarioAndDataVencimento(  @Param("usuarioId") int usuarioId,
+    List<Receita> findReceitasAtivasByUsuarioAndDataVencimento(  @Param("usuarioId") int usuarioId,
                                                                    @Param("dataInicioMes") LocalDateTime dataInicioMes,
                                                                    @Param("dataFimMes") LocalDateTime dataFimMes);
 
-    @Query("SELECT t FROM Despesa t LEFT JOIN ExtratoDespesa e ON t.id = e.despesa.id" +
+    @Query("SELECT t FROM Receita t LEFT JOIN ExtratoReceita e ON t.id = e.receita.id" +
             " WHERE t.usuario.id = :usuarioId AND t.ativo = true ORDER BY t.dataProcessamento ")
-    List<Despesa> findDespesasAtivasByUsuarioSemData(@Param("usuarioId") int usuarioId);
+    List<Receita> findReceitasAtivasByUsuarioSemData(@Param("usuarioId") int usuarioId);
 
-    @Query("SELECT t FROM Despesa t LEFT JOIN ExtratoDespesa e ON t.id = e.despesa.id" +
+    @Query("SELECT t FROM Receita t LEFT JOIN ExtratoReceita e ON t.id = e.receita.id" +
             " WHERE t.usuario.id = :usuarioId AND t.ativo  = true AND e.id IS NULL ORDER BY t.dataProcessamento ")
-    List<Despesa> findDespesasAtivasByUsuarioSemDataVigentes(@Param("usuarioId") int usuarioId);
+    List<Receita> findReceitasAtivasByUsuarioSemDataVigentes(@Param("usuarioId") int usuarioId);
 
-    @Query("SELECT SUM(d.valorParcela) FROM Despesa d " +
+    @Query("SELECT SUM(d.valorParcela) FROM Receita d " +
             "WHERE d.recorrente = false " +
             "AND d.dataVencimentoParcela >= :dataInicioMes " +
             "AND d.ativo = true " +
@@ -43,7 +43,7 @@ public interface DespesaRepositoryImpl extends JpaRepository<Despesa, Integer> {
             " ORDER BY d. dataVencimentoParcela, d.descricao ")
     Double findValorTotalParcelado(@Param("usuarioId") int usuarioId,  @Param("dataInicioMes") LocalDateTime dataInicioMes);
 
-    @Query("SELECT SUM(d.valorParcela) FROM Despesa d " +
+    @Query("SELECT SUM(d.valorParcela) FROM Receita d " +
             "WHERE d.recorrente = true " +
             "AND d.ativo = true " +
             "AND d.usuario.id = :usuarioId"+

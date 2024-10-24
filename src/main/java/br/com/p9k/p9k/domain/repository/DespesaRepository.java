@@ -48,13 +48,25 @@ public class DespesaRepository {
         return repositoryImpl.findById(idBanco);
     }
 
-    public List<Despesa> buscarDespesasVigentes(int idUsuario, LocalDateTime dataAtual) {
-        return repositoryImpl.findDespesasAtivasByUsuarioAndDataVencimento(idUsuario, dataAtual);
+    public List<Despesa> buscarDespesasVigentes(int idUsuario, LocalDateTime dataInicioMes, LocalDateTime dataFimMes) {
+        return repositoryImpl.findDespesasAtivasByUsuarioAndDataVencimento(idUsuario, dataInicioMes, dataFimMes);
     }
+
+
+    public Double buscarValorTotalParcelado(int idUsuario, LocalDateTime dataInicioMes) {
+        return repositoryImpl.findValorTotalParcelado(idUsuario, dataInicioMes);
+    }
+
+    public Double buscarValorTotalRecorrente(int idUsuario) {
+        return repositoryImpl.findValorTotalRecorrente(idUsuario);
+    }
+
+
 
     public List<Despesa> buscarDespesasGeralEFuturas(int idUsuario) {
         return repositoryImpl.findDespesasAtivasByUsuarioSemData(idUsuario);
     }
+
     public List<Despesa> buscarDespesasVigentesEFuturas(int idUsuario) {
         return repositoryImpl.findDespesasAtivasByUsuarioSemDataVigentes(idUsuario);
     }

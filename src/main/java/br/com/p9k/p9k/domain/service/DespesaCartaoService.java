@@ -2,8 +2,9 @@ package br.com.p9k.p9k.domain.service;
 
 import br.com.p9k.p9k.domain.Utils;
 import br.com.p9k.p9k.domain.entidade.Despesa;
+import br.com.p9k.p9k.domain.entidade.DespesaCartao;
+import br.com.p9k.p9k.domain.repository.DespesaCartaoRepository;
 import br.com.p9k.p9k.domain.repository.DespesaRepository;
-import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -14,28 +15,27 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class DespesaService {
+public class DespesaCartaoService {
 
-    private final DespesaRepository repository;
+    private final DespesaCartaoRepository repository;
 
-    public DespesaService(DespesaRepository repository) {
+    public DespesaCartaoService(DespesaCartaoRepository repository) {
         this.repository = repository;
     }
 
-    public void salvar(Despesa despesa) {
+    public void salvar(DespesaCartao despesa) {
         int contadorVencimentoMes = 0;
 
         for (int parcelaCurrent = despesa.getParcela(); parcelaCurrent <= despesa.getParcelaTotais(); parcelaCurrent++) {
             repository.salvar(
-                    Despesa
+                    DespesaCartao
                             .builder()
-                            .categoria(despesa.getCategoria())
+                            .cartao(despesa.getCartao())
                             .dataProcessamento(Utils.buscarDataAtual())
-                            .juros(despesa.isJuros())
                             .parcela(despesa.isRecorrente() ? 0 : parcelaCurrent)
                             .recorrente(despesa.isRecorrente())
                             .usuario(despesa.getUsuario())
-                            .dataVencimentoParcela(despesa.isRecorrente() ? Utils.buscarDataAtual() : despesa.getDataVencimentoParcela().plus(contadorVencimentoMes, ChronoUnit.MONTHS))
+                            .dataCompra(despesa.isRecorrente() ? Utils.buscarDataAtual() : despesa.getDataCompra().plus(contadorVencimentoMes, ChronoUnit.MONTHS))
                             .parcelaTotais(despesa.isRecorrente() ? 0 : despesa.getParcelaTotais())
                             .valorParcela(despesa.getValorParcela())
                             .valorTotal(despesa.isRecorrente() ? despesa.getValorParcela()  : despesa.getValorTotal())
@@ -44,38 +44,29 @@ public class DespesaService {
                             .build());
             contadorVencimentoMes++;
         }
-
-
     }
 
-    public void remover(Despesa Despesa) {
+    public void remover(DespesaCartao Despesa) {
         repository.remover(Despesa);
     }
 
-    public void alterar(Despesa Despesa) {
+    public void alterar(DespesaCartao Despesa) {
         repository.alterar(Despesa);
     }
 
-    public List<Despesa> buscarTodos() {
+    public List<DespesaCartao> buscarTodos() {
         return repository.buscarTodos();
     }
 
-    public Optional<Despesa> findById(int id) {
+    public Optional<DespesaCartao> findById(int id) {
         return repository.findById(id);
     }
 
 
-    public List<Despesa> buscarDespesasVigentes(int idUsuario) {
-       return repository.buscarDespesasVigentes(idUsuario, Utils.buscarDataInicioMes(), Utils.buscarDataFimMes());
+    public List<DespesaCartao> buscarDespesasCartaoAtivoMes(int idUsuario,  int idCartao) {
+       return repository.buscarDespesasCartaoAtivoMes(idUsuario, idCartao, Utils.buscarDataInicioMes(), Utils.buscarDataFimMes());
 
     }
 
-    public List<Despesa> buscarDespesasGeralEFuturas(int idUsuario) {
-       return repository.buscarDespesasGeralEFuturas(idUsuario);
 
-    }
-    public List<Despesa> buscarDespesasVigentesEFuturas(int idUsuario) {
-       return repository.buscarDespesasVigentesEFuturas(idUsuario);
-
-    }
 }

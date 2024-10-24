@@ -35,7 +35,7 @@ public class UsuarioController {
             service.salvar(objeto);
             return new ResponseEntity<>("Usuario atualizada com sucesso!", HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("Usuario não encontrada", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("Usuario não encontrada", HttpStatus.NO_CONTENT);
         }
     }
 
@@ -51,7 +51,7 @@ public class UsuarioController {
         if (objeto.isPresent()) {
             return new ResponseEntity<>(objeto.get(), HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("Usuario não encontrado", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("Usuario não encontrado", HttpStatus.NO_CONTENT);
         }
     }
 
@@ -62,7 +62,7 @@ public class UsuarioController {
             service.remover(objeto.get());
             return new ResponseEntity<>("Usuario deletada com sucesso!", HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("Usuario não encontrada", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("Usuario não encontrada", HttpStatus.NO_CONTENT);
         }
     }
 }

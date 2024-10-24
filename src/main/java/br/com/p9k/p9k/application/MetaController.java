@@ -35,7 +35,7 @@ public class MetaController {
             service.salvar(objeto);
             return new ResponseEntity<>("Meta atualizada com sucesso!", HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("Meta não encontrada", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("Meta não encontrada", HttpStatus.NO_CONTENT);
         }
     }
 
@@ -51,7 +51,7 @@ public class MetaController {
         if (objeto.isPresent()) {
             return new ResponseEntity<>(objeto.get(), HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("Meta não encontrado", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("Meta não encontrado", HttpStatus.NO_CONTENT);
         }
     }
 
@@ -62,7 +62,7 @@ public class MetaController {
             service.remover(objeto.get());
             return new ResponseEntity<>("Meta deletada com sucesso!", HttpStatus.OK);
         } else {
-            return new ResponseEntity<>("Meta não encontrada", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>("Meta não encontrada", HttpStatus.NO_CONTENT);
         }
     }
 }

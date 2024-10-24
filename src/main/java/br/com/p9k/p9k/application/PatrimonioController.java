@@ -35,7 +35,7 @@
 //            service.salvar(objeto);
 //            return new ResponseEntity<>("Patrimonio atualizada com sucesso!", HttpStatus.OK);
 //        } else {
-//            return new ResponseEntity<>("Patrimonio não encontrada", HttpStatus.NOT_FOUND);
+//            return new ResponseEntity<>("Patrimonio não encontrada", HttpStatus.NO_CONTENT);
 //        }
 //    }
 //
@@ -51,7 +51,7 @@
 //        if (objeto.isPresent()) {
 //            return new ResponseEntity<>(objeto.get(), HttpStatus.OK);
 //        } else {
-//            return new ResponseEntity<>("Patrimonio não encontrado", HttpStatus.NOT_FOUND);
+//            return new ResponseEntity<>("Patrimonio não encontrado", HttpStatus.NO_CONTENT);
 //        }
 //    }
 //
@@ -62,7 +62,7 @@
 //            service.remover(objeto.get());
 //            return new ResponseEntity<>("Patrimonio deletada com sucesso!", HttpStatus.OK);
 //        } else {
-//            return new ResponseEntity<>("Patrimonio não encontrada", HttpStatus.NOT_FOUND);
+//            return new ResponseEntity<>("Patrimonio não encontrada", HttpStatus.NO_CONTENT);
 //        }
 //    }
 //}
