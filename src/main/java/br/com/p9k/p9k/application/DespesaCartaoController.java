@@ -36,6 +36,16 @@ public class DespesaCartaoController {
         }
     }
 
+    @GetMapping("/todas")
+    public ResponseEntity<Object> findDespesasByUsuario(@RequestParam int idUsuario) {
+        List<DespesaCartao> listaDespesas = service.findDespesasByUsuario(idUsuario);
+        if (!listaDespesas.isEmpty()) {
+            return new ResponseEntity<>(listaDespesas, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Despesa não encontrado", HttpStatus.NO_CONTENT);
+        }
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<String> deletar(@PathVariable int id) {
         Optional<DespesaCartao> objeto = service.findById(id);

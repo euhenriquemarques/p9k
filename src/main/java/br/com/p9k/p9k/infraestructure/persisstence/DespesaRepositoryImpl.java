@@ -27,6 +27,18 @@ public interface DespesaRepositoryImpl extends JpaRepository<Despesa, Integer> {
                                                                    @Param("dataInicioMes") LocalDateTime dataInicioMes,
                                                                    @Param("dataFimMes") LocalDateTime dataFimMes);
 
+    @Query("SELECT d FROM Despesa d " +
+            "LEFT JOIN ExtratoDespesa ed ON d.id = ed.despesa.id " +
+            "WHERE ed.id IS NULL " +
+            "AND d.usuario.id = :usuarioId " +
+            "AND (" +
+            "(d.recorrente = false AND d.dataVencimentoParcela > :dataInicioMes ) " +
+            "OR d.recorrente = true" +
+            ") " +
+            "ORDER BY d.dataVencimentoParcela, d.descricao")
+    List<Despesa> findDespesasByUsuario(  @Param("usuarioId") int usuarioId,
+                                                                 @Param("dataInicioMes") LocalDateTime dataInicioMes);
+
     @Query("SELECT t FROM Despesa t LEFT JOIN ExtratoDespesa e ON t.id = e.despesa.id" +
             " WHERE t.usuario.id = :usuarioId AND t.ativo = true ORDER BY t.dataProcessamento ")
     List<Despesa> findDespesasAtivasByUsuarioSemData(@Param("usuarioId") int usuarioId);
@@ -50,4 +62,13 @@ public interface DespesaRepositoryImpl extends JpaRepository<Despesa, Integer> {
             " ORDER BY d. dataVencimentoParcela, d.descricao ")
     Double findValorTotalRecorrente(@Param("usuarioId") int usuarioId);
 
+
+    @Query("SELECT SUM(d.valorParcela) FROM Despesa d " +
+            "WHERE d.recorrente = true " +
+            "AND d.ativo = true " +
+            "AND d.usuario.id = :usuarioId"+
+           " AND d.dataVencimentoParcela BETWEEN :dataInicioMes AND :dataFimMes" +
+            " ORDER BY d. dataVencimentoParcela, d.descricao ")
+    Double findSomaMensal(@Param("usuarioId") int idUsuario, @Param("dataInicioMes") LocalDateTime dataInicioMes,
+                          @Param("dataFimMes") LocalDateTime dataFimMes);
 }

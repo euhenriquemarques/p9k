@@ -57,4 +57,9 @@ public class DespesaCartaoRepository {
     public Double findSomaPorCartaoDentroPeriodo(int idCartao, LocalDateTime dataInicio, LocalDateTime dataFim) {
         return repositoryImpl.findSomaPorCartaoDentroPeriodo(idCartao,  dataInicio, dataFim);
     }
+
+    public List<DespesaCartao> findDespesasByUsuario(int idUsuario, LocalDateTime dataInicio) {
+        return repositoryImpl.findSomaPorCartaoDentroPeriodo(idUsuario,  dataInicio);
+
+    }
 }

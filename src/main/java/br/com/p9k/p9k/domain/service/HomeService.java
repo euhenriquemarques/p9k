@@ -8,10 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.Month;
-import java.time.Year;
 import java.time.format.TextStyle;
-import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -46,6 +43,7 @@ public class HomeService {
 
         List<DespesaCartaoDTO> listaDespesaCartaoMesFechado = getExtratoDespesaCartaoFechado(idUsuario);
         List<DespesaCartaoDTO> listaDespesaCartao12Meses = getExtratoDespesaCartaoAberto12Meses(idUsuario);
+        List<ResumoMensalDTO> listaResumoMensal = buscarResumoMensal(idUsuario, listaDespesaCartao12Meses);
         listaDespesaCartaoMesFechado = listaDespesaCartaoMesFechado.stream()
                 .filter(despesaFechada ->
                         listaDespesaCartaoPaga.stream()
@@ -55,13 +53,21 @@ public class HomeService {
                 .collect(Collectors.toList());
 
 
-        return montarHomeDTO(listaSaldo, listaDespesa, listaDespesaPagas, listaDespesaCartaoPaga, valortotalParcelado, valortotalRecorrente, listaDespesaCartaoMesFechado, listaDespesaCartao12Meses);
+        return montarHomeDTO(listaSaldo, listaDespesa, listaDespesaPagas, listaDespesaCartaoPaga, valortotalParcelado, valortotalRecorrente, listaDespesaCartaoMesFechado, listaDespesaCartao12Meses, listaResumoMensal);
 
+    }
+
+    private List<ResumoMensalDTO> buscarResumoMensal(int idUsuario, List<DespesaCartaoDTO> listaDespesaCartao12Meses) {
+        List<ResumoMensalDTO> listaResumo = new ArrayList<>();
+        listaResumo.add(buscarMensalDespesas(idUsuario));
+        listaResumo.add(buscarMensalReceita(idUsuario));
+        listaResumo.add(buscarMensalCartao(listaDespesaCartao12Meses));
+       return listaResumo;
     }
 
     private static HomeDTO montarHomeDTO(List<Saldo> listaSaldo, List<Despesa> listaDespesa, List<ExtratoDespesa> listaDespesaPagas,
                                          List<ExtratoDespesaCartao> listaDespesaCartaoPaga, Double valortotalParcelado, Double valortotalRecorrente,
-                                         List<DespesaCartaoDTO> listaDespesaCartaoMesFechado, List<DespesaCartaoDTO> listaDespesaCartao12Meses) {
+                                         List<DespesaCartaoDTO> listaDespesaCartaoMesFechado, List<DespesaCartaoDTO> listaDespesaCartao12Meses, List<ResumoMensalDTO> listaResumoMensal) {
         HomeDTO homeDTO = HomeDTO.builder().listaSaldo(listaSaldo.stream().map(item -> {
                     return SaldoDTO.builder().saldo(item.getSaldo())
                             .banco(item.getConta().getBanco().getDescricao())
@@ -102,6 +108,7 @@ public class HomeService {
                 .valortotalRecorrente(valortotalRecorrente)
                 .listaDespesaCartao(listaDespesaCartaoMesFechado)
                 .listaDespesaCartao12Meses(listaDespesaCartao12Meses)
+                .listaResumoMensal(listaResumoMensal)
                 .build();
         return homeDTO;
     }
@@ -144,6 +151,113 @@ public class HomeService {
             }
         }
         return listaRetorno;
+    }
+
+    public ResumoMensalDTO buscarMensalDespesas(int idUsuario) {
+
+
+
+            ResumoMensalDTO despesaDTO = ResumoMensalDTO.builder()
+                    .categoria("Despesa")
+                    .meses(new LinkedHashMap<>())
+                    .build();
+
+        for (int somaMes = 0; somaMes <= 12; somaMes++) {
+
+            LocalDate hoje = LocalDate.from(Utils.buscarDataAtual());
+
+            LocalDate inicioPeriodo = LocalDate.of(hoje.getYear(), hoje.getMonth(), 1);
+            inicioPeriodo = inicioPeriodo.plusMonths(somaMes);
+            LocalDate fimNovoPeriodo = inicioPeriodo.plusMonths(1);
+
+            LocalDateTime inicio = inicioPeriodo.atStartOfDay();
+            LocalDateTime fim = fimNovoPeriodo.plusDays(1).atStartOfDay().minusSeconds(1);
+            fim = fim.minusDays(1);
+
+            Double somaPorCartaoDentroPeriodo = despesaRepository.findSomaMensal(idUsuario, inicio, fim);
+            if (somaPorCartaoDentroPeriodo != null) {
+                String mesAno = fim.getMonth().getDisplayName(TextStyle.FULL, Locale.getDefault()) + "/" + fim.getYear();
+                despesaDTO.getMeses().put(mesAno, somaPorCartaoDentroPeriodo);
+                despesaDTO.setValor(somaPorCartaoDentroPeriodo);
+            }
+
+        }
+
+        return despesaDTO;
+
+    }
+    public ResumoMensalDTO buscarMensalReceita(int idUsuario) {
+
+            ResumoMensalDTO despesaDTO = ResumoMensalDTO.builder()
+                    .categoria("Receita")
+                    .meses(new LinkedHashMap<>())
+                    .build();
+
+        for (int somaMes = 0; somaMes <= 12; somaMes++) {
+
+
+
+            LocalDate hoje = LocalDate.from(Utils.buscarDataAtual());
+
+            LocalDate inicioPeriodo = LocalDate.of(hoje.getYear(), hoje.getMonth(), 1);
+            inicioPeriodo = inicioPeriodo.plusMonths(somaMes);
+            LocalDate fimNovoPeriodo = inicioPeriodo.plusMonths(1);
+
+            LocalDateTime inicio = inicioPeriodo.atStartOfDay();
+            LocalDateTime fim = fimNovoPeriodo.plusDays(1).atStartOfDay().minusSeconds(1);
+            fim = fim.minusDays(1);
+
+            Double somaPorCartaoDentroPeriodo = despesaRepository.findSomaMensal(idUsuario, inicio, fim);
+            if (somaPorCartaoDentroPeriodo != null) {
+                String mesAno = fim.getMonth().getDisplayName(TextStyle.FULL, Locale.getDefault()) + "/" + fim.getYear();
+                despesaDTO.getMeses().put(mesAno, somaPorCartaoDentroPeriodo);
+                despesaDTO.setValor(somaPorCartaoDentroPeriodo);
+            }
+
+
+    }
+
+        return despesaDTO;
+    }
+
+    public ResumoMensalDTO buscarMensalCartao(List<DespesaCartaoDTO> listaCartao) {
+        List<ResumoMensalDTO> listaRetorno = new ArrayList<>();
+
+
+            ResumoMensalDTO despesaDTO = ResumoMensalDTO.builder()
+                    .categoria("Cartao")
+                    .meses(new LinkedHashMap<>())
+                    .build();
+        for (int somaMes = 0; somaMes <= 12; somaMes++) {
+
+
+
+            LocalDate hoje = LocalDate.from(Utils.buscarDataAtual());
+
+            LocalDate inicioPeriodo = LocalDate.of(hoje.getYear(), hoje.getMonth(), 1);
+            inicioPeriodo = inicioPeriodo.plusMonths(somaMes);
+            LocalDate fimNovoPeriodo = inicioPeriodo.plusMonths(1);
+
+            LocalDateTime fim = fimNovoPeriodo.plusDays(1).atStartOfDay().minusSeconds(1);
+            fim = fim.minusDays(1);
+
+            String mesAno = fim.getMonth().getDisplayName(TextStyle.FULL, Locale.getDefault()) + "/" + fim.getYear();
+
+            double total = listaCartao.stream()
+                    .map(DespesaCartaoDTO::getMeses)
+                    .map(meses -> meses.get(mesAno))
+                    .filter(Objects::nonNull)
+                    .mapToDouble(Double::doubleValue)
+                    .sum();
+
+                despesaDTO.getMeses().put(mesAno, total);
+                despesaDTO.setValor(total);
+
+
+        }
+
+        return despesaDTO;
+
     }
 
 

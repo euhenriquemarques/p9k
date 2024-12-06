@@ -1,8 +1,8 @@
 package br.com.p9k.p9k.domain.repository;
 
 
-import br.com.p9k.p9k.domain.entidade.Banco;
 import br.com.p9k.p9k.domain.entidade.DadosPagamento;
+import br.com.p9k.p9k.domain.entidade.Despesa;
 import br.com.p9k.p9k.infraestructure.persisstence.DadosPagamentoRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -42,8 +42,15 @@ public class DadosPagamentoRepository {
         return null;
     }
 
-    public List<DadosPagamento> findById(int idUsuario, LocalDateTime dataAtual) {
+    public List<DadosPagamento> findByUsuarioId(int idUsuario, LocalDateTime dataAtual) {
         return repositoryImpl.findByUsuarioId(idUsuario, dataAtual);
     }
 
+    public List<DadosPagamento> findByDespesasVigentes(List<Despesa> listadespesasVigentesEFuturas) {
+        return repositoryImpl.findByDespesasVigentes(listadespesasVigentesEFuturas);
+    }
+
+    public Optional<DadosPagamento> findById(int id) {
+        return repositoryImpl.findById(id);
+    }
 }

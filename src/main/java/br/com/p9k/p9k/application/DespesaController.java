@@ -49,6 +49,16 @@ public class DespesaController {
         }
     }
 
+    @GetMapping("/todas")
+    public ResponseEntity<Object> findDespesasByUsuario(@RequestParam int idUsuario) {
+        List<Despesa> listaDespesas = service.findDespesasByUsuario(idUsuario);
+        if (!listaDespesas.isEmpty()) {
+            return new ResponseEntity<>(listaDespesas, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>("Despesa não encontrado", HttpStatus.NO_CONTENT);
+        }
+    }
+
     @GetMapping("/geral")
     public ResponseEntity<Object> buscarDespesasGeralEFuturas(@RequestParam int idUsuario) {
         List<Despesa> listaDespesas = service.buscarDespesasGeralEFuturas(idUsuario);

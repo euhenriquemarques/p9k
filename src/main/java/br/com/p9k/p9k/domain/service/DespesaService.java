@@ -23,6 +23,11 @@ public class DespesaService {
     }
 
     public void salvar(Despesa despesa) {
+
+        if(despesa.getId()!= 0){
+            repository.salvar(despesa);
+            return;
+        }
         int contadorVencimentoMes = 0;
 
         for (int parcelaCurrent = despesa.getParcela(); parcelaCurrent <= despesa.getParcelaTotais(); parcelaCurrent++) {
@@ -67,6 +72,11 @@ public class DespesaService {
 
     public List<Despesa> buscarDespesasVigentes(int idUsuario) {
        return repository.buscarDespesasVigentes(idUsuario, Utils.buscarDataInicioMes(), Utils.buscarDataFimMes());
+
+    }
+
+    public List<Despesa> findDespesasByUsuario(int idUsuario) {
+       return repository.findDespesasByUsuario(idUsuario, Utils.buscarDataInicioMes());
 
     }
 

@@ -24,6 +24,12 @@ public class DespesaCartaoService {
     }
 
     public void salvar(DespesaCartao despesa) {
+
+        if(despesa.getId()!= 0){
+            repository.salvar(despesa);
+            return;
+        }
+
         int contadorVencimentoMes = 0;
 
         for (int parcelaCurrent = despesa.getParcela(); parcelaCurrent <= despesa.getParcelaTotais(); parcelaCurrent++) {
@@ -68,5 +74,8 @@ public class DespesaCartaoService {
 
     }
 
+    public List<DespesaCartao> findDespesasByUsuario(int idUsuario) {
+        return repository.findDespesasByUsuario(idUsuario, Utils.buscarDataInicioMes());
 
+    }
 }

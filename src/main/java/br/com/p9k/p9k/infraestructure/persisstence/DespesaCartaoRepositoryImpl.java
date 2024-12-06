@@ -47,4 +47,12 @@ public interface DespesaCartaoRepositoryImpl extends JpaRepository<DespesaCartao
             " AND c.id = :idCartao "+
             " GROUP BY c.descricao")
     Double findSomaPorCartaoDentroPeriodo(@Param("idCartao") int usuarioId, @Param("dataInicioMes") LocalDateTime dataInicioMes, @Param("dataFimMes") LocalDateTime dataFimMes);
+
+    @Query("SELECT d " +
+            " FROM DespesaCartao d " +
+            " LEFT JOIN Cartao c ON c.id = d.cartao.id " +
+            " WHERE d.dataCompra > :dataInicioMes " +
+            " AND d.usuario.id = :usuarioId" +
+            " ORDER BY d. dataCompra, d.descricao ")
+    List<DespesaCartao> findSomaPorCartaoDentroPeriodo(@Param("usuarioId") int usuarioId, @Param("dataInicioMes") LocalDateTime dataInicioMes);
 }

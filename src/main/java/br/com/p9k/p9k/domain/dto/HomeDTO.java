@@ -15,6 +15,7 @@ public class HomeDTO {
     private List<DespesaDTO> listaDespesa;
     private List<DespesaCartaoDTO> listaDespesaCartao;
     private List<DespesaCartaoDTO> listaDespesaCartao12Meses;
+    private List<ResumoMensalDTO> listaResumoMensal;
     private List<ExtratoDespesaDTO> listaExtratoDespesa;
     private List<ExtratoDespesaCartaoDTO> listaExtratoDespesaCartao;
     private Double valortotalParcelado;
