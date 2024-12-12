@@ -1,7 +1,6 @@
 package br.com.p9k.p9k.domain.service;
 
-import br.com.p9k.p9k.domain.entidade.Banco;
-import br.com.p9k.p9k.domain.entidade.Usuario;
+import br.com.p9k.p9k.domain.entidade.User;
 import br.com.p9k.p9k.domain.repository.UsuarioRepository;
 import org.springframework.stereotype.Service;
 
@@ -17,23 +16,23 @@ public class UsuarioService {
         this.repository = repository;
     }
 
-    public void salvar(Usuario Usuario) {
+    public void salvar(User Usuario) {
         repository.salvar(Usuario);
     }
 
-    public void remover(Usuario Usuario) {
+    public void remover(User Usuario) {
         repository.remover(Usuario);
     }
 
-    public void alterar(Usuario Usuario) {
+    public void alterar(User Usuario) {
         repository.alterar(Usuario);
     }
 
-    public List<Usuario> buscarTodos() {
+    public List<User> buscarTodos() {
         return repository.buscarTodos();
     }
 
-    public Optional<Usuario> findById(int id) {
+    public Optional<User> findById(int id) {
         return repository.findById(id);
     }
 }

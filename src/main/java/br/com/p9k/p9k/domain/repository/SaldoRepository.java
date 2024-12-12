@@ -2,6 +2,7 @@ package br.com.p9k.p9k.domain.repository;
 
 
 import br.com.p9k.p9k.domain.entidade.Banco;
+import br.com.p9k.p9k.domain.entidade.Conta;
 import br.com.p9k.p9k.domain.entidade.Saldo;
 import br.com.p9k.p9k.infraestructure.persisstence.SaldoRepositoryImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,6 +48,10 @@ public class SaldoRepository {
 
     public Optional<Saldo> findByContaId(int contaId) {
         return repositoryImpl.findByContaId(contaId);
+    }
+
+    public Optional<Saldo> findByContaId(Conta contaId) {
+        return repositoryImpl.findByConta(contaId);
     }
 
 

@@ -25,7 +25,7 @@ public class DespesaCartao implements Serializable {
     private Cartao cartao;
     @ManyToOne(fetch = FetchType.LAZY)
     @NotNull
-    private Usuario usuario;
+    private User usuario;
     private LocalDateTime dataProcessamento;
     @NotNull
     private LocalDateTime dataCompra;

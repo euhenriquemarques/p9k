@@ -9,5 +9,6 @@ public class SaldoDTO {
 
     private double saldo;
     private String banco;
+    private String descricao;
     private String numero;
 }

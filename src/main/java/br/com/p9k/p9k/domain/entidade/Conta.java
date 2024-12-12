@@ -21,6 +21,8 @@ public class Conta  implements Serializable {
     private String numero;
     @NotNull
     private String agencia;
+    @NotNull
+    private String descricao;
     @ManyToOne
     @NotNull
     private Banco banco;
@@ -28,6 +30,7 @@ public class Conta  implements Serializable {
     private boolean status;
     private boolean nacional;
     @ManyToOne
-    private Usuario usuario;
+    @NotNull
+    private User usuario;
 
 }

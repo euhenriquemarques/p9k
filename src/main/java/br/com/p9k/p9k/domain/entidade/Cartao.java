@@ -23,7 +23,7 @@ public class Cartao implements Serializable {
     private String descricao;
     @ManyToOne
     @NotNull
-    private Usuario usuario;
+    private User usuario;
     @NotNull
     private String dataVencimentoCartao;
     @NotNull

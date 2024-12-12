@@ -22,14 +22,21 @@ public class ExtratoReceita implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @ManyToOne
+    @NotNull
     private Receita receita;
     private LocalDateTime dataProcessamento;
     @NotNull
     private LocalDateTime dataPagamento;
+    @NotNull
     private Double valor;
+    @NotNull
     private Double valorJuros;
+    @NotNull
     private Double valorDesconto;
     @ManyToOne
-    private Usuario usuario;
+    @NotNull
+    private User usuario;
+    @Transient
+    private int idConta;
 
 }

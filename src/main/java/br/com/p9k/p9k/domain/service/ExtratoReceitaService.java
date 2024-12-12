@@ -12,14 +12,21 @@ import java.util.Optional;
 public class ExtratoReceitaService {
 
     private final ExtratoReceitaRepository repository;
+    private final SaldoService saldoService;
 
-    public ExtratoReceitaService(ExtratoReceitaRepository repository) {
+    public ExtratoReceitaService(ExtratoReceitaRepository repository, SaldoService saldoService) {
         this.repository = repository;
+        this.saldoService = saldoService;
     }
 
     public void salvar(ExtratoReceita extratoReceita) {
-        extratoReceita.setDataProcessamento(Utils.buscarDataAtual());
-        repository.salvar(extratoReceita);
+        try {
+            saldoService.adicionarSaldoConta(extratoReceita.getIdConta(), (extratoReceita.getValor() + extratoReceita.getValorJuros()) - extratoReceita.getValorDesconto());
+            extratoReceita.setDataProcessamento(Utils.buscarDataAtual());
+            repository.salvar(extratoReceita);
+        }catch (Exception e){
+            throw e;
+        }
     }
 
     public void remover(ExtratoReceita ExtratoReceita) {

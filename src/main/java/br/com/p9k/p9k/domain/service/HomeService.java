@@ -71,6 +71,7 @@ public class HomeService {
         HomeDTO homeDTO = HomeDTO.builder().listaSaldo(listaSaldo.stream().map(item -> {
                     return SaldoDTO.builder().saldo(item.getSaldo())
                             .banco(item.getConta().getBanco().getDescricao())
+                            .descricao(item.getConta().getDescricao())
                             .numero(item.getConta().getNumero().replaceFirst("^.{2}", "XX"))
                             .build();
                 }).collect(Collectors.toList()))

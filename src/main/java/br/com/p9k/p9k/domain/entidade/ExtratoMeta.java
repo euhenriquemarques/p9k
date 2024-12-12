@@ -1,6 +1,7 @@
 package br.com.p9k.p9k.domain.entidade;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,9 +19,12 @@ public class ExtratoMeta  implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @ManyToOne
+    @NotNull
     private Meta meta;
     private LocalDateTime dataProcessamento;
+    @NotNull
     private Double valor;
+    @NotNull
     @ManyToOne
-    private Usuario usuario;
+    private User usuario;
 }

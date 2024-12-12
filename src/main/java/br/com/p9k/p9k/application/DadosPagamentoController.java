@@ -3,9 +3,12 @@ package br.com.p9k.p9k.application;
 import br.com.p9k.p9k.domain.entidade.DadosPagamento;
 import br.com.p9k.p9k.domain.entidade.Despesa;
 import br.com.p9k.p9k.domain.service.DadosPagamentoService;
+import br.com.p9k.p9k.domain.service.UserService;
+import br.com.p9k.p9k.infraestructure.config.JwtUtil;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,12 +16,17 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/dadosPagamento")
+@Validated
 public class DadosPagamentoController {
 
     private final DadosPagamentoService service;
+    private final JwtUtil jwtUtil;
+    private final UserService usuarioService;
 
-    public DadosPagamentoController(DadosPagamentoService service) {
+    public DadosPagamentoController(DadosPagamentoService service, JwtUtil jwtUtil, UserService usuarioService) {
         this.service = service;
+        this.jwtUtil = jwtUtil;
+        this.usuarioService = usuarioService;
     }
 
     @PostMapping
@@ -29,7 +37,14 @@ public class DadosPagamentoController {
 
 
     @GetMapping()
-    public ResponseEntity<Object> buscarPorId(@RequestParam int idUsuario) {
+    public ResponseEntity<Object> buscarPorId(@RequestHeader("Authorization") String authorizationHeader) {
+        if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
+            return new ResponseEntity<>("Token não fornecido ou inválido", HttpStatus.UNAUTHORIZED);
+        }
+
+        String token = authorizationHeader.substring(7);
+        int idUsuario = jwtUtil.extractUserId(token);
+
         List<DadosPagamento> lista = service.findByIdUsuario(idUsuario);
         if (!lista.isEmpty()) {
             return new ResponseEntity<>(lista, HttpStatus.OK);
@@ -39,7 +54,14 @@ public class DadosPagamentoController {
     }
 
     @GetMapping("/vigente")
-    public ResponseEntity<Object> buscarDespesasVigentes(@RequestParam int idUsuario) {
+    public ResponseEntity<Object> buscarDespesasVigentes(@RequestHeader("Authorization") String authorizationHeader) {
+        if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
+            return new ResponseEntity<>("Token não fornecido ou inválido", HttpStatus.UNAUTHORIZED);
+        }
+
+        String token = authorizationHeader.substring(7);
+        int idUsuario = jwtUtil.extractUserId(token);
+
         List<DadosPagamento> lista = service.findByVigentes(idUsuario);
         if (!lista.isEmpty()) {
             return new ResponseEntity<>(lista, HttpStatus.OK);
@@ -49,7 +71,7 @@ public class DadosPagamentoController {
     }
 
     @DeleteMapping("/cancelar")
-    public ResponseEntity<Object> cancelarDadosPagamento(@RequestParam int id) {
+    public ResponseEntity<Object> cancelarDadosPagamento(@Valid @RequestParam int id) {
         Optional<DadosPagamento> dadosPagamento = service.findById(id);
         if (dadosPagamento.isPresent()) {
            service.remover(dadosPagamento.get());

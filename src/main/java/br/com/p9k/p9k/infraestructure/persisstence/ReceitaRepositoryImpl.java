@@ -50,4 +50,9 @@ public interface ReceitaRepositoryImpl extends JpaRepository<Receita, Integer> {
             " ORDER BY d. dataVencimentoParcela, d.descricao ")
     Double findValorTotalRecorrente(@Param("usuarioId") int usuarioId);
 
+    @Query("SELECT d FROM Receita d " +
+            "WHERE d.dataVencimentoParcela >= :dataInicioMes " +
+            "AND d.usuario.id = :usuarioId"+
+            " ORDER BY d. dataVencimentoParcela, d.descricao ")
+    List<Receita> findDespesasByUsuario(@Param("usuarioId") int usuarioId,  @Param("dataInicioMes") LocalDateTime dataInicioMes);
 }

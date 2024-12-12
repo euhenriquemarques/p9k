@@ -69,4 +69,8 @@ public class ReceitaRepository {
     public List<Receita> buscarReceitasVigentesEFuturas(int idUsuario) {
         return repositoryImpl.findReceitasAtivasByUsuarioSemDataVigentes(idUsuario);
     }
+
+    public List<Receita> findDespesasByUsuario(int idUsuario, LocalDateTime dataInicioMes) {
+        return repositoryImpl.findDespesasByUsuario(idUsuario, dataInicioMes);
+    }
 }

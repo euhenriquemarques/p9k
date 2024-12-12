@@ -19,6 +19,11 @@ public class ReceitaService {
     }
 
     public void salvar(Receita receita) {
+        if(receita.getId()!= 0){
+            repository.salvar(receita);
+            return;
+        }
+
         int contadorVencimentoMes = 0;
 
         for (int parcelaCurrent = receita.getParcela(); parcelaCurrent <= receita.getParcelaTotais(); parcelaCurrent++) {
@@ -72,5 +77,9 @@ public class ReceitaService {
     public List<Receita> buscarReceitasVigentesEFuturas(int idUsuario) {
        return repository.buscarReceitasVigentesEFuturas(idUsuario);
 
+    }
+
+    public List<Receita> findDespesasByUsuario(int idUsuario) {
+        return repository.findDespesasByUsuario(idUsuario,  Utils.buscarDataInicioMes());
     }
 }

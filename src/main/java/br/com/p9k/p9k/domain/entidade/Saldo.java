@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 
 @Data
 @Entity
@@ -18,7 +17,9 @@ public class Saldo  implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+    @NotNull
     private Double saldo;
     @ManyToOne
+    @NotNull
     private Conta conta;;
 }

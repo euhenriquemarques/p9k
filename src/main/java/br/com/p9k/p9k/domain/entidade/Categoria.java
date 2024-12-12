@@ -27,6 +27,6 @@ public class Categoria implements Serializable {
     private TipoCategoria movimentacao;
     @ManyToOne
     @NotNull
-    private Usuario usuario;
+    private User usuario;
 
 }

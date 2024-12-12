@@ -25,7 +25,7 @@ public class Despesa  implements Serializable {
     private Categoria categoria;
     @ManyToOne(fetch = FetchType.LAZY)
     @NotNull
-    private Usuario usuario;
+    private User usuario;
     private LocalDateTime dataProcessamento;
     @NotNull
     private boolean recorrente;

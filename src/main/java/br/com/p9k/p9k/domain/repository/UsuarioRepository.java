@@ -1,9 +1,8 @@
 package br.com.p9k.p9k.domain.repository;
 
 
-import br.com.p9k.p9k.domain.entidade.Banco;
-import br.com.p9k.p9k.domain.entidade.Usuario;
-import br.com.p9k.p9k.infraestructure.persisstence.UsuarioRepositoryImpl;
+import br.com.p9k.p9k.domain.entidade.User;
+import br.com.p9k.p9k.infraestructure.persisstence.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -14,26 +13,26 @@ import java.util.Optional;
 public class UsuarioRepository {
 
     @Autowired
-    private UsuarioRepositoryImpl repositoryImpl;
+    private UserRepository repositoryImpl;
 
-    public Usuario salvar(Usuario Usuario) {
+    public User salvar(User Usuario) {
         return repositoryImpl.save(Usuario);
     }
 
-    public void remover(Usuario Usuario) {
+    public void remover(User Usuario) {
         repositoryImpl.delete(Usuario);
     }
 
-    public Usuario alterar(Usuario Usuario) {
+    public User alterar(User Usuario) {
         return repositoryImpl.save(Usuario);
     }
 
-    public List<Usuario> buscarTodos() {
+    public List<User> buscarTodos() {
         return repositoryImpl.findAll();
     }
 
-    public Usuario buscarPorId(int idUsuario) {
-        Optional<Usuario> optionalUsuario = repositoryImpl.findById(idUsuario);
+    public User buscarPorId(int idUsuario) {
+        Optional<User> optionalUsuario = repositoryImpl.findById((long) idUsuario);
         if (optionalUsuario.isPresent()){
             return optionalUsuario.get();
         }
@@ -41,8 +40,8 @@ public class UsuarioRepository {
         return null;
     }
 
-    public Optional<Usuario> findById(int idBanco) {
-        return repositoryImpl.findById(idBanco);
+    public Optional<User> findById(int idBanco) {
+        return repositoryImpl.findById((long) idBanco);
     }
 
 }
