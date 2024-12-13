@@ -6,6 +6,7 @@ import br.com.p9k.p9k.infraestructure.persisstence.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -19,11 +20,29 @@ public class UserService {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public User createUser(String username, String rawPassword) {
-        User user = new User();
-        user.setUsername(username);
-        user.setPassword(passwordEncoder.encode(rawPassword));
-        return userRepository.save(user);
+    public User salvar( User request) {
+        String plano = null;
+        if(request.getPlano() == 1 ){
+            plano = "BASIC";
+        }
+        if(request.getPlano() == 2 ){
+            plano = "MEDIUMN";
+        }
+        if(request.getPlano() == 3 ){
+            plano = "PREMIUMN";
+        }
+
+        return userRepository.save(User.builder()
+                .username(request.getUsername())
+                .nome(request.getNome())
+                .password(passwordEncoder.encode(request.getPassword()))
+                .ativo(true)
+                .criacao(LocalDateTime.now())
+                .nascimento(request.getNascimento())
+                .email(request.getEmail())
+                .role(plano)
+                .status("ATIVO")
+                .build());
     }
     public  User getUserIdByUsername(String username) {
         Optional<User> usuario = userRepository.findByUsername(username);
@@ -32,4 +51,5 @@ public class UserService {
         }
         throw new IllegalArgumentException("Usuário não encontrado");
     }
+
 }

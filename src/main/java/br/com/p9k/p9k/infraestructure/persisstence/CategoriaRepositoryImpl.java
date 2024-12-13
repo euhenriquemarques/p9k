@@ -17,15 +17,15 @@ public interface CategoriaRepositoryImpl extends JpaRepository<Categoria, Intege
 
 
     @Query("SELECT t FROM Categoria t " +
-            " WHERE t.usuario.id = :usuarioId AND t.movimentacao != 'INVESTIMENTO' AND t.movimentacao != 'ENTRADA' ORDER BY t.descricao")
+            "WHERE (t.usuario.id = :usuarioId OR t.usuario.id IS NULL)  AND t.movimentacao != 'INVESTIMENTO' AND t.movimentacao != 'ENTRADA' ORDER BY t.descricao")
     List<Categoria> findByIdusuario(@Param("usuarioId") int usuarioId);
 
     @Query("SELECT t FROM Categoria t " +
-            " WHERE t.usuario.id = :usuarioId AND t.movimentacao = 'INVESTIMENTO' OR t.movimentacao = 'ENTRADA' ORDER BY t.descricao")
+            "WHERE (t.usuario.id = :usuarioId OR t.usuario.id IS NULL)  AND t.movimentacao = 'INVESTIMENTO' OR t.movimentacao = 'ENTRADA' ORDER BY t.descricao")
     List<Categoria> findyInvestimentoEntrada(@Param("usuarioId") int usuarioId);
 
     @Query("SELECT t FROM Categoria t " +
-            " WHERE t.usuario.id = :usuarioId ORDER BY t.descricao")
+            "WHERE (t.usuario.id = :usuarioId OR t.usuario.id IS NULL)  ORDER BY t.descricao")
     List<Categoria> buscarCategoriaPorUsuario(@Param("usuarioId") int usuarioId);
 
 }

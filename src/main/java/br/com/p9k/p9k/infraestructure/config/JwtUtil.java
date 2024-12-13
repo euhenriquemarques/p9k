@@ -17,7 +17,7 @@ public class JwtUtil {
         return Keys.hmacShaKeyFor(SECRET.getBytes());
     }
 
-    public String generateToken(String username, Long userId, String role) {
+    public String generateToken(String username, int userId, String role) {
         return Jwts.builder()
                 .setSubject(username)
                 .claim("idUsuario", userId) // Inclui o ID do usuário no token

@@ -9,7 +9,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
@@ -25,10 +26,19 @@ public class CustomUserDetailsService implements UserDetailsService {
         User user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
 
+        // Lista de permissões diretamente (você pode definir isso como preferir)
+        List<String> roles = List.of("ROLE_ADM", "BASIC", "MEDIUMN", "PREMIUMN");
+
+        // Converter as roles diretamente em authorities
+        List<SimpleGrantedAuthority> authorities = roles.stream()
+                .map(SimpleGrantedAuthority::new) // Converter cada role para SimpleGrantedAuthority
+                .collect(Collectors.toList());
+
         return new org.springframework.security.core.userdetails.User(
                 user.getUsername(),
                 user.getPassword(), // Hash BCrypt do BD
-                Collections.singletonList(new SimpleGrantedAuthority(user.getRole()))
+                authorities // Passar as authorities geradas
         );
     }
+
 }

@@ -39,7 +39,7 @@ public class UsuarioController {
         Optional<User> optional = service.findById(id);
 
         if (optional.isPresent()) {
-            objeto.setId((long) id);
+            objeto.setId( id);
             service.salvar(objeto);
             return new ResponseEntity<>("Usuario atualizada com sucesso!", HttpStatus.OK);
         } else {

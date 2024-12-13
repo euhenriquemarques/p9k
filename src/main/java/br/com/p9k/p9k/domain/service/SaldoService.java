@@ -21,16 +21,21 @@ public class SaldoService {
         this.contaRepository = contaRepository;
     }
 
-    public void salvar(Saldo Saldo) {
-        repository.salvar(Saldo);
+    public void salvar(Saldo saldo) {
+        Optional<Saldo> saldoOptional = findByContaId(saldo.getConta().getId());
+        if(saldoOptional.isPresent()){
+            Saldo objeto = saldoOptional.get();
+            objeto.setSaldo(saldo.getSaldo());
+            repository.salvar(objeto);
+        }
     }
 
-    public void remover(Saldo Saldo) {
-        repository.remover(Saldo);
+    public void remover(Saldo saldo) {
+        repository.remover(saldo);
     }
 
-    public void alterar(Saldo Saldo) {
-        repository.alterar(Saldo);
+    public void alterar(Saldo saldo) {
+        repository.alterar(saldo);
     }
 
     public List<Saldo> buscarTodos() {
